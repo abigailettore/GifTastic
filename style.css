@@ -1,0 +1,17 @@
+button,div,form,input {
+    margin: 10px;
+}
+
+body {
+	background: aliceblue;
+}
+
+.container {
+	position: relative;
+}
+
+header.jumbotron {
+    text-align: center;
+    background:white;
+    color: teal;
+}
