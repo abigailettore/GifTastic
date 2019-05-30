@@ -5,7 +5,7 @@
     // apiKey = "kJR77B2ujy4wj3mBj7sFA2PhIZgT0Tka"
     console.log("hello")
     var show = $(this).attr("data-name");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=kJR77B2ujy4wj3mBj7sFA2PhIZgT0Tka&q=" + show + "&limit=25&offset=0&rating=G&lang=en"
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=kJR77B2ujy4wj3mBj7sFA2PhIZgT0Tka&q=" + show + "&limit=10&offset=0&rating=G&lang=en" 
 
     // Creating an AJAX call for the specific movie button being clicked
     $.ajax({
@@ -18,80 +18,69 @@
       console.log(response.data[0].images)
       console.log(response.data[0].images.original)
       console.log(response.data[0].images.original.url)
-
-
-      for(var i=0; i<response.data.length; i++){
-        var image=$('<img src = '+ response.data[i].images.original.url +'>')
-      $("#show-view").append(image)
-      }
-
-      // var image=$('<img src = '+ response.data[0].images.original.url +'>')
-      // $("#show-view").append(image)
+      console.log(response.data[0].rating)
       
-      // Creating a div to hold the movie
-      var showDiv = $("<div class='show'>");
+      var results= response.data;
+      for(var i=0; i<results.length; i++){
+      
+        var showDiv = $("<div class='show'>");
+        var rating = results[i].rating;
+        var pOne = $("<p>").text("Rating: " + rating);
+        var image = $("<img>")
+    
+        
+        image.addClass("gif");
+        image.attr("src", results[i].images.original_still.url);
+        image.attr("data-state", "still");
+        image.attr("data-still", results[i].images.original_still.url);
+        image.attr("data-animate", results[i].images.original.url);
 
-      // Storing the rating data
-      var rating = response.Rated;
+        showDiv.append(image);
+        showDiv.append('<a href="' + results[i].images.original.url + '" target="_blank"');
+        showDiv.append('<br>');
+        showDiv.append(pOne);
 
-      // Creating an element to have the rating displayed
-      var pOne = $("<p>").text("Rating: " + rating);
-
-      // Displaying the rating
-      showDiv.append(pOne);
-
-      // Storing the release year
-      var released = response.Released;
-
-      // Creating an element to hold the release year
-      var pTwo = $("<p>").text("Released: " + released);
-
-      // Displaying the release year
-      showDiv.append(pTwo);
-
-      // Storing the plot
-      var plot = response.Plot;
-
-      // Creating an element to hold the plot
-      var pThree = $("<p>").text("Plot: " + plot);
-
-      // Appending the plot
-      showDiv.append(pThree);
-
-      // Retrieving the URL for the image
-      var imgURL = response.Poster;
-
-      // Creating an element to hold the image
-      var image = $("<img>").attr("src", imgURL);
-
-      // Appending the image
-      showDiv.append(image);
-
-      // Putting the entire movie above the previous movies
-      $("#shows-view").prepend(showDiv);
-    });
+        $("#show-view").prepend(showDiv);
+        }
+      });
 
   }
+    $(document).on("click", '.gif', function() {
+      event.stopPropagation();
+    // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+    var state = $(this).attr("data-state");
+    // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+    // Then, set the image's data-state to animate
+    // Else set src to the data-still value
+    if (state === "still") {
+      $(this).attr("src", $(this).attr("data-animate"));
+      $(this).attr("data-state", "animate");
+    } else {
+      $(this).attr("src", $(this).attr("data-still"));
+      $(this).attr("data-state", "still");
+    }
+  });
+  
 
   // Function for displaying movie data
   function renderButtons() {
 
     // Deleting the movies prior to adding new movies
     // (this is necessary otherwise you will have repeat buttons)
-    $("#buttons-view").empty();
+    $("#show-view").empty();
 
     // Looping through the array of movies
-    for (var i = 0; i < shows.length; i++) {
+    for (var j = 0; j < shows.length; j++) {
 
       // Then dynamicaly generating buttons for each movie in the array
       // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
       var a = $("<button>");
       // Adding a class of movie-btn to our button
-      a.addClass("movie-btn");
+      a.addClass("show-btn");
       // Adding a data-attribute
-      a.attr("data-name", shows[i]);
+      a.attr("data-name", shows[j]);
       // Providing the initial button text
-      a.text(shows[i]);
+      a.text(shows[j]);
       // Adding the button to the buttons-view div
       $("#buttons-view").append(a);
     }
@@ -101,7 +90,7 @@
   $("#add-show").on("click", function(event) {
     event.preventDefault();
     // This line grabs the input from the textbox
-    var show = $("#movie-input").val().trim();
+    var show = $("#show-input").val().trim();
 
     // Adding movie from the textbox to our array
     shows.push(show);
@@ -111,7 +100,7 @@
   });
 
   // Adding a click event listener to all elements with a class of "movie-btn"
-  $(document).on("click", ".movie-btn", displayShowInfo);
+  $(document).on("click", ".show-btn", displayShowInfo);
 
   // Calling the renderButtons function to display the intial buttons
   renderButtons();
