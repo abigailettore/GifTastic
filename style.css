@@ -1,9 +1,12 @@
 button,div,form,input {
     margin: 10px;
+    font-family: inherit; 
+    color: black;
+    
 }
 
 body {
-	background: aliceblue;
+	background: #9A293B
 }
 
 .container {
@@ -13,5 +16,8 @@ body {
 header.jumbotron {
     text-align: center;
     background:white;
-    color: teal;
+    color: #9A293B;
+}
+#add-show{
+    background-color: white;
 }
