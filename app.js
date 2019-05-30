@@ -61,14 +61,13 @@
     }
   });
   
-
+  
   // Function for displaying movie data
   function renderButtons() {
 
     // Deleting the movies prior to adding new movies
     // (this is necessary otherwise you will have repeat buttons)
-    $("#show-view").empty();
-
+    $("#buttons-view").empty();
     // Looping through the array of movies
     for (var j = 0; j < shows.length; j++) {
 
