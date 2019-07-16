@@ -1,5 +1,5 @@
 # GifTastic
-<h1> GifTastic </h1>
+
 
 In this assignment, the GIPHY API was used to make a dynamic web page that populates with gifs of popular Netflix shows. To finish this task, the GIPHY API was called and and  JavaScript and jQuery was used to change the HTML of your site.
 
