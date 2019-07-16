@@ -1,23 +1,50 @@
 button,div,form,input {
     margin: 10px;
     font-family: inherit; 
-    color: black;
+    color: white;
+    background-color: transparent;    
+    animation: fadeIn 2s;
+}
+     @-webkit-keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+      
+        to {
+          opacity: 1;
+        }
+      }
+  
+
+body {
+    /* background:white; */
+    background-color: #9A293B;
+    
     
 }
 
-body {
-	background: #9A293B
-}
-
 .container {
-	position: relative;
+    position: relative;
+    background-image: linear-gradient(white, black);
 }
 
 header.jumbotron {
     text-align: center;
-    background:white;
+    
+    background-color: transparent;
     color: #9A293B;
 }
 #add-show{
     background-color: white;
+
+}
+input#add-show{
+    background-color: #9A293B;
+}
+button.show-btn{
+    color:#9A293B;
+    background-color: white; 
+}
+label{
+    color: black; 
 }
